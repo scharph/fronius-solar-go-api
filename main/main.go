@@ -16,10 +16,22 @@ func main() {
 		fmt.Println(err)
 	}
 
-	fmt.Println("Baseurl:", info.BaseURL, "Apiversion", info.APIVersion)
+	info.Print()
 
-	args := froniussolar.InverterRealtimeDataArgs{nil, nil, nil}
+	data, err := client.GetCumulationInverterData(ctx, 1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	data.Total.Print()
+	data.Day.Print()
 
-	client.GetInverterRealtimeData(ctx, args)
+	data2, err := client.GetMinMaxInverterData(ctx, 1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	data2.MaxACVoltageTotal.Print()
+	data2.MaxACPowerYear.Print()
 
 }

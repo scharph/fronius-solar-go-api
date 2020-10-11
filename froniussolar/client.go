@@ -7,13 +7,14 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 )
 
 const (
 	// BaseURLV1 ...
-	BaseURLV1 = "https://scharph.free.beeceptor.com"
+	BaseURLV1 = "http://10.0.0.16/solar_api/v1"
 )
 
 // NewClient ...
@@ -39,6 +40,10 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) error {
 
 	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusBadRequest {
 		var errRes errorResponse
+		fmt.Println("Code:", res.StatusCode)
+		body, err := ioutil.ReadAll(res.Body)
+		fmt.Println("Data", string(body))
+
 		if err = json.NewDecoder(res.Body).Decode(&errRes); err == nil {
 			return errors.New(errRes.Message)
 		}
@@ -69,29 +74,98 @@ func (c *Client) GetAPIVersionInfo(ctx context.Context) (*Info, error) {
 	return &res, nil
 }
 
-// GetInverterRealtimeData
-func (c *Client) GetInverterRealtimeData(ctx context.Context, args InverterRealtimeDataArgs) (*Info, error) {
+// GetCumulationInverterData ..
+func (c *Client) GetCumulationInverterData(ctx context.Context, deviceid int) (*CumulationInverterData, error) {
+
+	queryParams := url.Values{}
+
+	queryParams.Add("Scope", "Device")
+	queryParams.Add("DataCollection", "CumulationInverterData")
+	queryParams.Add("DeviceId", fmt.Sprint(deviceid))
+	if deviceid == 0 {
+		return nil, errors.New("error: deviceid is 0")
+	}
+
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/GetInverterRealtimeData.cgi", c.BaseURL), nil)
 	if err != nil {
 		return nil, err
 	}
 
-	req = req.WithContext(ctx)
+	req.URL.RawQuery = queryParams.Encode()
 
-	res, err := c.HTTPClient.Do(req)
-	if err != nil {
-		fmt.Println(err)
+	req = req.WithContext(ctx)
+	res := struct {
+		Body *struct {
+			Data *CumulationInverterData
+		}
+	}{}
+
+	if err := c.sendRequest(req, &res); err != nil {
+		return nil, err
+	}
+	return res.Body.Data, nil
+}
+
+// CommonInverterData ..
+func (c *Client) GetCommonInverterData(ctx context.Context, deviceid int) (*CommonInverterData, error) {
+
+	queryParams := url.Values{}
+
+	queryParams.Add("Scope", "Device")
+	queryParams.Add("DataCollection", "CommonInverterData")
+	queryParams.Add("DeviceId", fmt.Sprint(deviceid))
+	if deviceid == 0 {
+		return nil, errors.New("error: deviceid is 0")
 	}
 
-	defer res.Body.Close()
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/GetInverterRealtimeData.cgi", c.BaseURL), nil)
+	if err != nil {
+		return nil, err
+	}
 
-	body, err := ioutil.ReadAll(res.Body)
-	fmt.Println(string(body))
-	// res := Info{}
+	req.URL.RawQuery = queryParams.Encode()
 
-	// if err := c.sendRequest(req, &res); err != nil {
-	// 	return nil, err
-	// }
+	req = req.WithContext(ctx)
+	res := struct {
+		Body *struct {
+			Data *CommonInverterData
+		}
+	}{}
 
-	return nil, nil
+	if err := c.sendRequest(req, &res); err != nil {
+		return nil, err
+	}
+	return res.Body.Data, nil
+}
+
+// CommonInverterData ..
+func (c *Client) GetMinMaxInverterData(ctx context.Context, deviceid int) (*MinMaxInverterData, error) {
+
+	queryParams := url.Values{}
+
+	queryParams.Add("Scope", "Device")
+	queryParams.Add("DataCollection", "MinMaxInverterData")
+	queryParams.Add("DeviceId", fmt.Sprint(deviceid))
+	if deviceid == 0 {
+		return nil, errors.New("error: deviceid is 0")
+	}
+
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/GetInverterRealtimeData.cgi", c.BaseURL), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.URL.RawQuery = queryParams.Encode()
+
+	req = req.WithContext(ctx)
+	res := struct {
+		Body *struct {
+			Data *MinMaxInverterData
+		}
+	}{}
+
+	if err := c.sendRequest(req, &res); err != nil {
+		return nil, err
+	}
+	return res.Body.Data, nil
 }
