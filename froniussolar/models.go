@@ -23,7 +23,7 @@ type Info struct {
 	CompatiblityRange *string `json:"CompatibilityRange"`
 }
 
-func (i *Info) Print() {
+func (i *Info) PrintApiInfo() {
 	fmt.Printf("APIVersion: %d, BaseURL: %s, CompatiblityRange: %s\n", *i.APIVersion, *i.BaseURL, *i.CompatiblityRange)
 }
 
@@ -36,7 +36,8 @@ func (d *DataPoint) Print() {
 	fmt.Printf("%.2f %s\n", *d.Value, *d.Unit)
 }
 
-func (d *DataPoint) ToString() string {
+// Pretty Return formatted string with Unit
+func (d *DataPoint) Pretty() string {
 	return fmt.Sprintf("%.2f %s", *d.Value, *d.Unit)
 }
 
