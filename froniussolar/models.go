@@ -36,20 +36,27 @@ func (d *DataPoint) Print() {
 	fmt.Printf("%.2f %s\n", *d.Value, *d.Unit)
 }
 
+func (d *DataPoint) ToString() string {
+	return fmt.Sprintf("%.2f %s", *d.Value, *d.Unit)
+}
+
 type CumulationInverterData struct {
-	Day     *DataPoint `json:"DAY_ENERGY"`
-	Total   *DataPoint `json:"TOTAL_ENERGY"`
-	Year    *DataPoint `json:"YEAR_ENERGY"`
-	PowerAC *DataPoint `json:"PAC"`
+	EnergyDay   *DataPoint `json:"DAY_ENERGY"`
+	EnergyTotal *DataPoint `json:"TOTAL_ENERGY"`
+	EnergyYear  *DataPoint `json:"YEAR_ENERGY"`
+	PowerAC     *DataPoint `json:"PAC"`
 }
 
 type CommonInverterData struct {
-	VoltageDC *DataPoint `json:"UDC"`
-	CurrentDC *DataPoint `json:"IDC"`
-	Day       *DataPoint `json:"DAY_ENERGY"`
-	Total     *DataPoint `json:"TOTAL_ENERGY"`
-	Year      *DataPoint `json:"YEAR_ENERGY"`
-	PowerAC   *DataPoint `json:"PAC"`
+	VoltageDC   *DataPoint `json:"UDC"`
+	VoltageAC   *DataPoint `json:"UAC"`
+	CurrentDC   *DataPoint `json:"IDC"`
+	CurrentAC   *DataPoint `json:"IAC"`
+	EnergyDay   *DataPoint `json:"DAY_ENERGY"`
+	EnergyTotal *DataPoint `json:"TOTAL_ENERGY"`
+	EnergyYear  *DataPoint `json:"YEAR_ENERGY"`
+	PowerAC     *DataPoint `json:"PAC"`
+	FrequencyAC *DataPoint `json:"FAC"`
 }
 
 type MinMaxInverterData struct {
