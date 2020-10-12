@@ -76,3 +76,31 @@ type MinMaxInverterData struct {
 	MinACVoltageTotal *DataPoint `json:"TOTAL_UACMIN"`
 	MaxDCVoltageTotal *DataPoint `json:"TOTAL_UDCMAX"`
 }
+
+type PowerFlowRealtimeData struct {
+	MeterLocation      *string  `json:"Meter_Location"`
+	Mode               *string  `json:"Mode"`
+	PGrid              *float32 `json:"P_Grid"`
+	PLoad              *float32 `json:"P_Load"`
+	PAkku              *float32 `json:"P_Akku"`
+	PPV                *float32 `json:"P_PV"`
+	RelSelfConsumption *float32 `json:"rel_SelfConsumption"`
+	RelAutonomy        *float32 `json:"rel_Autonomy"`
+}
+
+// LoggerInfo This provides information about the logging device which provides this API.
+type LoggerInfo struct {
+	CO2Factor        *float32 `json:"CO2Factor"`
+	CO2Unit          string   `json:"CO2Unit"`
+	CashCurrency     string   `json:"CashCurrency"`
+	CashFactor       *float32 `json:"CashFactor"`
+	DeliveryFactor   *float32 `json:"DeliveryFactor"`
+	HWVersion        *string  `json:"HWVersion"`
+	PlatformID       *string  `json:"PlatformID"`
+	ProductID        *string  `json:"ProductID"`
+	SWVersion        *string  `json:"SWVersion"`
+	TimezoneLocation *string  `json:"TimezoneLocation"`
+	TimezoneName     *string  `json:"TimezoneName"`
+	UTCOffset        int      `json:"UTCOffset"`
+	UniqueID         *string  `json:"UniqueID"`
+}
