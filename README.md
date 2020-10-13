@@ -2,7 +2,7 @@
 > Use the local api from a fronius solar api.
 
 
-```
+
 
 ## Usage example
 
@@ -26,9 +26,7 @@ go run main.go
 
 ## Meta
 
-Your Name – [@1scharph](https://twitter.com/1scharph)
-
-Distributed under the XYZ license. See ``LICENSE`` for more information.
+Philipp Schartlmüller – [@1scharph](https://twitter.com/1scharph)
 
 [https://github.com/scharph](https://github.com/scharph)
 
