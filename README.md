@@ -1,14 +1,11 @@
 # Fronius Solar Go Api
 > Use the local api from a fronius solar api.
 
-
-
-
 ## Usage example
 
 A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
 
-Example provided in [example][main/example]
+Example provided in [example][main/main.go]
 
 ## Example setup
 
@@ -32,7 +29,7 @@ Philipp Schartlmüller – [@1scharph](https://twitter.com/1scharph)
 
 ## Contributing
 
-1. Fork it (<https://github.com/yourname/yourproject/fork>)
+1. Fork it (<https://github.com/scharph/fronius-solar-go-api.git>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
 3. Commit your changes (`git commit -am 'Add some fooBar'`)
 4. Push to the branch (`git push origin feature/fooBar`)
