@@ -24,7 +24,10 @@ type Info struct {
 }
 
 func (i *Info) PrintApiInfo() {
-	fmt.Printf("APIVersion: %d, BaseURL: %s, CompatiblityRange: %s\n", *i.APIVersion, *i.BaseURL, *i.CompatiblityRange)
+	if i != nil {
+		fmt.Printf("APIVersion: %d, BaseURL: %s, CompatiblityRange: %s\n", *i.APIVersion, *i.BaseURL, *i.CompatiblityRange)
+	}
+	fmt.Println("error")
 }
 
 type DataPoint struct {
@@ -33,12 +36,20 @@ type DataPoint struct {
 }
 
 func (d *DataPoint) Print() {
-	fmt.Printf("%.2f %s\n", *d.Value, *d.Unit)
+	if d != nil {
+		fmt.Printf("%.2f %s\n", *d.Value, *d.Unit)
+	}
+	fmt.Println("nil")
+
 }
 
 // Pretty Return formatted string with Unit
 func (d *DataPoint) Pretty() string {
-	return fmt.Sprintf("%.2f %s", *d.Value, *d.Unit)
+	if d != nil {
+		return fmt.Sprintf("%.2f %s", *d.Value, *d.Unit)
+	}
+	return "nil"
+
 }
 
 type CumulationInverterData struct {

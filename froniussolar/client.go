@@ -12,15 +12,10 @@ import (
 	"time"
 )
 
-const (
-	// BaseURLV1 ...
-	BaseURLV1 = "http://10.0.0.16/solar_api/v1"
-)
-
 // NewClient ...
-func NewClient() *Client {
+func NewClient(baseurl string) *Client {
 	return &Client{
-		BaseURL: BaseURLV1,
+		BaseURL: baseurl,
 		HTTPClient: &http.Client{
 			Timeout: time.Minute,
 		},
@@ -168,4 +163,48 @@ func (c *Client) GetMinMaxInverterData(ctx context.Context, deviceid int) (*MinM
 		return nil, err
 	}
 	return res.Body.Data, nil
+}
+
+// GetPowerFlowRealtimeData ..
+func (c *Client) GetPowerFlowRealtimeData(ctx context.Context) (*PowerFlowRealtimeData, error) {
+
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/GetPowerFlowRealtimeData.fcgi", c.BaseURL), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req = req.WithContext(ctx)
+	res := struct {
+		Body *struct {
+			Data *struct {
+				Site *PowerFlowRealtimeData
+			}
+		}
+	}{}
+
+	if err := c.sendRequest(req, &res); err != nil {
+		return nil, err
+	}
+	return res.Body.Data.Site, nil
+}
+
+// GetPowerFlowRealtimeData ..
+func (c *Client) GetLoggerInfo(ctx context.Context) (*LoggerInfo, error) {
+
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/GetLoggerInfo.cgi", c.BaseURL), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req = req.WithContext(ctx)
+	res := struct {
+		Body *struct {
+			LoggerInfo *LoggerInfo
+		}
+	}{}
+
+	if err := c.sendRequest(req, &res); err != nil {
+		return nil, err
+	}
+	return res.Body.LoggerInfo, nil
 }
