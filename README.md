@@ -1,12 +1,21 @@
 # Fronius Solar Go Api
-> Use the local api from a fronius solar api.
+> Use the local api from a fronius solar inverter.
 
 ## Usage example
 
-A few motivating and useful examples of how your product can be used. Spice this up with code blocks and potentially more screenshots.
+```go
+commonData, err := client.GetCommonInverterData(ctx, 1)
+if err != nil {
+   log.Fatal(err)
+   return
+}
 
-Example provided in [example][(../blob/master/main/main.go]
-
+fmt.Println("Energy Day:", commonData.EnergyDay.Pretty())
+fmt.Println("Year Day:", commonData.EnergyYear.Pretty())
+fmt.Println("Total Day:", commonData.EnergyTotal.Pretty())
+fmt.Println("AC Power:", commonData.PowerAC.Pretty())
+fmt.Println("Current DC:", commonData.CurrentDC.Pretty())
+```
 ## Example setup
 
 Describe how to install all development dependencies and how to run an automated test-suite of some kind. Potentially do this for multiple platforms.
