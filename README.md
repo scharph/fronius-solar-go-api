@@ -4,17 +4,29 @@
 ## Usage example
 
 ```go
-commonData, err := client.GetCommonInverterData(ctx, 1)
-if err != nil {
-   log.Fatal(err)
-   return
-}
+package main
 
-fmt.Println("Energy Day:", commonData.EnergyDay.Pretty())
-fmt.Println("Year Day:", commonData.EnergyYear.Pretty())
-fmt.Println("Total Day:", commonData.EnergyTotal.Pretty())
-fmt.Println("AC Power:", commonData.PowerAC.Pretty())
-fmt.Println("Current DC:", commonData.CurrentDC.Pretty())
+import (
+	"fmt"
+	"github.com/scharph/fronius-solar-go-api/froniussolar"
+	"context"
+)
+
+func main(){
+
+	client := froniussolar.NewClient("<<INVERTER IP>>")
+
+	ctx := context.Background();
+
+	data, err := client.GetCommonInverterData(ctx, 1)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println(data.EnergyDay.Pretty())
+
+}
 ```
 ## Example setup
 
