@@ -101,7 +101,7 @@ func (c *Client) GetCumulationInverterData(ctx context.Context, deviceid int) (*
 	return res.Body.Data, nil
 }
 
-// CommonInverterData ..
+// GetCommonInverterData ..
 func (c *Client) GetCommonInverterData(ctx context.Context, deviceid int) (*CommonInverterData, error) {
 
 	queryParams := url.Values{}
@@ -133,7 +133,7 @@ func (c *Client) GetCommonInverterData(ctx context.Context, deviceid int) (*Comm
 	return res.Body.Data, nil
 }
 
-// CommonInverterData ..
+// GetMinMaxInverterData ..
 func (c *Client) GetMinMaxInverterData(ctx context.Context, deviceid int) (*MinMaxInverterData, error) {
 
 	queryParams := url.Values{}
@@ -188,7 +188,7 @@ func (c *Client) GetPowerFlowRealtimeData(ctx context.Context) (*PowerFlowRealti
 	return res.Body.Data.Site, nil
 }
 
-// GetPowerFlowRealtimeData ..
+// GetLoggerInfo ..
 func (c *Client) GetLoggerInfo(ctx context.Context) (*LoggerInfo, error) {
 
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/GetLoggerInfo.cgi", c.BaseURL), nil)
